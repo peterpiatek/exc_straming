@@ -9,18 +9,23 @@ class GoogleAuth extends Component {
             this.auth = await window.gapi.auth2.init({
                 clientId: '1016637979120-hgd6gi5ar9bs6t6v3o9b2hl4budh6sm6.apps.googleusercontent.com'
             })
+            const userProfileData = this.auth.currentUser.get().getBasicProfile();
+            this.profile = {
+                email: userProfileData.getEmail(),
+                id: userProfileData.getId(),
+                name: userProfileData.getName(),
+            }
             this.onSignStatusChange(this.auth.isSignedIn.get());
             this.auth.isSignedIn.listen(this.onSignStatusChange);
         })
     }
 
-    onSignStatusChange = isSignedIn => {
+    onSignStatusChange = (isSignedIn) => {
         if(isSignedIn){
-            this.props.signIn();
+            this.props.signIn(this.profile);
         } else {
             this.props.signOut();
         }
-
     }
 
     renderButtons = () => {

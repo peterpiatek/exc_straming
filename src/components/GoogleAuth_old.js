@@ -15,7 +15,6 @@ class GoogleAuth_old extends Component {
             this.auth = gapi.auth2.getAuthInstance();
             this.setState({isSignedIn: this.auth.isSignedIn.get()});
             this.auth.isSignedIn.listen(this.onAuthChange);
-            console.log(this.auth);
         });
     }
 

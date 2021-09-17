@@ -1,10 +1,8 @@
 import {SIGN_IN, SIGN_OUT} from "./types";
 
-export const signIn = () => {
-    console.log('action sin');
-    return {type: SIGN_IN}
+export const signIn = (profile) => {
+    return {type: SIGN_IN, payload: profile}
 }
 export const signOut = () => {
-    console.log('action sout');
     return {type: SIGN_OUT}
 }
