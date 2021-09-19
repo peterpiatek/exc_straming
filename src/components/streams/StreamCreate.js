@@ -3,28 +3,40 @@ import {Field, reduxForm} from 'redux-form';
 
 class StreamCreate extends Component {
 
-    renderInput(props) {
-        console.log(props.meta);
-        const {input, label, meta: {error}, meta: {touched}} = props;
-        const errorCss = touched && error ? 'error' : '';
+    renderError = (touched, error) => {
         console.log(error);
+        console.log(touched);
+        if(touched && error){
+            console.log('in');
+            return (
+                <div className="ui error message">
+                    <div className="header">{error}</div>
+                </div>
+            );
+        }
+    }
+
+    renderInput = (props) => {
+        // console.log(props.meta);
+        const {input, label, meta: {error, touched}} = props;
+        const errorCss = touched && error ? 'error' : '';
         return (
             <div className={`field ${errorCss}`}>
                 <label>{label}</label>
                 <input {...input} autoComplete="off" />
-                {touched && <div>{error}</div>}
+                {this.renderError(touched, error)}
             </div>
         );
     }
 
     onSubmit(formProps) {
-        console.log(formProps);
+        // console.log(formProps);
     }
 
     render() {
         // console.log(this.props);
         return (
-            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form">
+            <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
                 <Field name="title" component={this.renderInput} label="Enter Title" />
                 <Field name="description" component={this.renderInput} label="Enter Description"/>
                 <button className="ui button primary">Send</button>
