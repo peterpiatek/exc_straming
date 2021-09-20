@@ -28,7 +28,7 @@ class StreamCreate extends Component {
     }
 
     onSubmit = formValues => {
-        this.props.createStream(formValues);
+        this.props.createStream({...formValues, userId: this.props.userId});
     }
 
     render() {
@@ -51,4 +51,9 @@ const validate = (formValues) => {
 
 const formWrapped = reduxForm({form: 'New Steam', validate})(StreamCreate);
 
-export default connect(null, {createStream})(formWrapped);
+const mapStateToProps = state => {
+    console.log(state);
+    return {userId: state.auth.profile.id}
+}
+
+export default connect(mapStateToProps, {createStream})(formWrapped);

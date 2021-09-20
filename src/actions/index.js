@@ -16,6 +16,7 @@ export const signOut = () => {
     return {type: SIGN_OUT}
 }
 export const createStream = newStream => async dispatch => {
+    console.log(newStream);
     const response = await streams.post('/streams', newStream);
     dispatch({type: NEW_STREAM, payload: response.data})
 }
@@ -36,6 +37,7 @@ export const fetchStream = streamId => async dispatch => {
 }
 
 export const fetchStreams = () => async dispatch => {
-    const response = streams.get('/streams');
+    const response = await streams.get('/streams');
+    console.log(response);
     dispatch({type: FETCH_STREAMS, payload: response.data})
 }

@@ -12,7 +12,7 @@ export default (state = {}, action) => {
         case DELETE_STREAM:
             return _.omit(state, action.payload);
         case FETCH_STREAMS:
-            // return {...state};
+            return {...state, ..._.keyBy(action.payload, 'id')}
         case FETCH_STREAM:
             return {...state, [action.payload.id]: action.payload}
         case NEW_STREAM:
