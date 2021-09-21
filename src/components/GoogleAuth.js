@@ -17,19 +17,18 @@ class GoogleAuth extends Component {
     onSignStatusChange = (isSignedIn) => {
         if(isSignedIn){
             if(this.profile === null || !this.profile){
-                console.log(this.auth.currentUser.get().getBasicProfile());
                 const userProfileData = this.auth.currentUser.get().getBasicProfile();
                 if(userProfileData){
                     this.profile = {
                         email: userProfileData.getEmail(),
-                        id: userProfileData.getId(),
+                        userId: userProfileData.getId(),
                         name: userProfileData.getName(),
                     }
                 }
             }
             this.props.signIn(this.profile);
         } else {
-            this.profile = null;
+            // this.profile = null;
             this.props.signOut();
         }
     }

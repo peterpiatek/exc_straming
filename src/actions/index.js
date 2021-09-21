@@ -1,3 +1,4 @@
+import history from "../history";
 import {
     NEW_STREAM,
     SIGN_IN,
@@ -15,10 +16,12 @@ export const signIn = profile => {
 export const signOut = () => {
     return {type: SIGN_OUT}
 }
-export const createStream = newStream => async dispatch => {
-    console.log(newStream);
-    const response = await streams.post('/streams', newStream);
-    dispatch({type: NEW_STREAM, payload: response.data})
+export const createStream = formValues => async (dispatch, getState) => {
+    const {userId} = getState().auth.profile;
+    const response = await streams.post('/streams', {...formValues, userId});
+    dispatch({type: NEW_STREAM, payload: response.data});
+//    programmatic navigation to get user back to "/" after success api response
+    history.push('/');
 }
 
 export const deleteStream = streamId => async dispatch => {
@@ -38,6 +41,5 @@ export const fetchStream = streamId => async dispatch => {
 
 export const fetchStreams = () => async dispatch => {
     const response = await streams.get('/streams');
-    console.log(response);
     dispatch({type: FETCH_STREAMS, payload: response.data})
 }
